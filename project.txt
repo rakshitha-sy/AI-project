@@ -1,0 +1,27 @@
+import google.generativeai as genai
+
+# Add your Gemini API Key here
+genai.configure(api_key="Your api key")
+
+# List available models to find one that supports content generation
+print("Listing available models that support 'generateContent':")
+for m in genai.list_models():
+    if "generateContent" in m.supported_generation_methods:
+        print(m.name)
+
+# Load the Gemini model
+# The previous attempt with "gemini-pro" failed. Please choose an available model from the list above.
+# For example, you might use "gemini-1.5-flash" or "gemini-1.5-pro" if they are listed.
+model = genai.GenerativeModel("models/gemini-3.5-flash") # Updated model name as requested.
+
+# Get prescription from user
+prescription = input("Enter your prescription: ")
+
+# Ask AI to explain it
+prompt = f"Explain this prescription in simple words:\n{prescription}"
+
+response = model.generate_content(prompt)
+
+# Print the explanation
+print("\nExplanation:")
+print(response.text)
